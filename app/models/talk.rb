@@ -156,7 +156,7 @@ class Talk < ActiveRecord::Base
   end
 
   def through(user)
-    h = Hash.new []
+    h = Hash.new RDL.type_cast([], "Array<List>")
     return h unless user
     user.subscribed_lists.each do |l, kl|
       if l.talks.exists? self.id then

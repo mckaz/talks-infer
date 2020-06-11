@@ -110,22 +110,22 @@ class ListsController < ApplicationController
 
 private
 
-  def adjust(params)
+def adjust(params)
     owners = []
     params.each_pair { |k,v|
       next unless k =~ /owner_(\d+)/
       next if v == ""
-      owners << User.find(v)
+      owners << User.find(RDL.type_cast(v, "String"))
     }
 
     posters = []
     params.each_pair { |k,v|
       next unless k =~ /poster_(\d+)/
       next if v == ""
-      posters << User.find(v)
+      posters << User.find(RDL.type_cast(v, "String"))
     }
-    return params[:list].permit(:name, :short_descr, :long_descr),
-      owners, posters
+    return [params[:list].permit(:name, :short_descr, :long_descr),
+      owners, posters]
   end
 
   def compute_edit_fields

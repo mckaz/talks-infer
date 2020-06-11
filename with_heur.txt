@@ -1,0 +1,200 @@
+Difference encountered for JobsController#@jobs.
+Inferred: Array<Delayed::Backend::ActiveRecord::Job>
+Original: Array<Delayed::Job>
+Difference encountered for JobsController#@job.
+Inferred: Delayed::Backend::ActiveRecord::Job
+Original: Delayed::Job
+Difference encountered for ListsController#@owners.
+Inferred: { ListsController# var: @owners }
+Original: Array<User>
+Difference encountered for ListsController#@posters.
+Inferred: { ListsController# var: @posters }
+Original: Array<User>
+Difference encountered for ListsController#@users.
+Inferred: ActiveRecord_Relation<User>
+Original: Array<User>
+# 3
+Difference encountered for TalksController#@talks.
+Inferred: (ActiveRecord_Relation<Talk> or Array<Talk>)
+Original: Array<Talk>
+# 4
+Difference encountered for TalksController#@posted.
+Inferred: []
+Original: Array<List>
+Difference encountered for TalksController#@regs.
+Inferred: ActiveRecord_Relation<Registration>
+Original: Array<Registration>
+Difference encountered for TalksController#@date.
+Inferred: { TalksController# var: @date }
+Original: String
+Difference encountered for TalksController#@start_time.
+Inferred: { TalksController# var: @start_time }
+Original: String
+Difference encountered for TalksController#@end_time.
+Inferred: { TalksController# var: @end_time }
+Original: String
+# 6
+Difference encountered for UsersController#@list_subscriptions.
+Inferred: Hash
+Original: Hash<List, Symbol>
+Difference encountered for UsersController#@your_lists.
+Inferred: { UsersController# var: @your_lists }
+Original: Array<List>
+Difference encountered for UsersController#@talk_subscriptions.
+Inferred: { UsersController# var: @talk_subscriptions }
+Original: Hash<Talk, (String or Symbol)>
+Difference encountered for UsersController#@talks.
+Inferred: (Array or Array<Talk>)
+Original: Array<Talk>
+Difference encountered for UsersController#@title.
+Inferred: 'Your Talks'
+Original: String
+Difference encountered for TheMailer#@talks.
+Inferred: (ActiveRecord_Relation<Talk> or Array<Talk>)
+Original: Array<Talk>
+Difference encountered for TheMailer#@changes.
+Inferred: { TheMailer# var: @changes }
+Original: Set<Symbol>
+Difference encountered for TheMailer#@message.
+Inferred: { TheMailer# var: @message }
+Original: String
+Difference encountered for User#subscribed_lists.
+Inferred: () -> Array<[List, String]>
+Original: () -> Array<Array<(List or Symbol)>>
+# 10
+Difference encountered for User#subscribed_talks.
+Inferred: (([ ==: (:all) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:current) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:past) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:this_week) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:today) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:upcoming) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ inspect: () -> { { User#subscribed_talks arg: range }#inspect ret: ret } ]), ?[ member?: (String) -> { { User#subscribed_talks arg: filter }#member? ret: ret } ]) -> Hash<Talk, String>
+Original: (Symbol) -> Hash<Talk, (String or Symbol)>
+# 11
+Difference encountered for Talk#match_range.
+Inferred: (([ ==: (:all) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:current) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:past) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:this_week) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:today) -> { { Talk#match_range arg: range }#== ret: ret } ] and [ ==: (:upcoming) -> { { Talk#match_range arg: range }#== ret: ret } ])) -> (false or true)
+Original: (Symbol) -> (false or true)
+# 12
+Difference encountered for Talk#poster?.
+Inferred: (User) -> false
+Original: (User) -> (false or true)
+Difference encountered for Talk#through.
+Inferred: (User) -> { subscriber: Array<(List or { { { Talk#through arg: user }#subscribed_lists ret: ret }#each block_arg: l })>, watcher: Array<(List or { { { Talk#through arg: user }#subscribed_lists ret: ret }#each block_arg: l })> }
+Original: (User) -> (:kind_subscriber_through or :kind_watcher_through)
+# NOT COUNTING ABOVE CAUSE THEY'RE CLEARLY FROM DIFFERENT VERSIONS
+# 14
+Difference encountered for Talk#email_watchers.
+Inferred: ({ Talk#email_watchers arg: changes }) -> Array<User>
+Original: (Set<(:abstract or :bio or :reg or :speaker or :time or :title or :venue)>) -> Array<User>
+Difference encountered for [s]AdminController#spam_users.
+Inferred: ({ message: { { TheMailer#send_admin_message arg: h }#[] ret: ret }, subject: String }) -> (false or true)
+Original: (Hash<Symbol, String>) -> (false or true)
+# 16
+Difference encountered for ApplicationController#require_site_admin.
+Inferred: () -> { ApplicationController#require_site_admin ret: ret }
+Original: () -> %any
+# 17 (counting it if it could be %any
+Difference encountered for ApplicationController#generate_ical.
+Inferred: ([ each: () {({ { ApplicationController#generate_ical arg: talks }#each block_arg: t }) -> { { ApplicationController#generate_ical arg: talks }#each block_ret: block_ret }} -> { { ApplicationController#generate_ical arg: talks }#each ret: ret } ]) -> { ApplicationController#generate_ical ret: ret }
+Original: (Array<Talk>) -> RiCal::Component::Calendar
+Difference encountered for ApplicationController#fix_range.
+Inferred: (([ []: (:range) -> { { ApplicationController#fix_range arg: params }#[] ret: ret } ] and [ []=: (:range, :current) -> { { ApplicationController#fix_range arg: params }#[]= ret: ret } ])) -> :current
+Original: (Hash<(String or Symbol), %any>) -> Symbol
+# 19
+Difference encountered for BuildingsController#update.
+Inferred: () -> String
+Original: () -> (Array<String> or String)
+Difference encountered for JobsController#index.
+Inferred: () -> Array<Delayed::Backend::ActiveRecord::Job>
+Original: () -> Array<Delayed::Job>
+Difference encountered for JobsController#runcmd.
+Inferred: ({ JobsController#runcmd arg: cmd }) -> String
+Original: (String) -> String
+Difference encountered for JobsController#error.
+Inferred: ({ JobsController#error arg: s }) -> false
+Original: (String) -> false
+Difference encountered for ListsController#show.
+Inferred: () -> (Array<String> or String)
+Original: () -> %any
+Difference encountered for ListsController#edit.
+Inferred: () -> ActiveRecord_Relation<User>
+Original: () -> Array<User>
+Difference encountered for ListsController#compute_edit_fields.
+Inferred: () -> ActiveRecord_Relation<User>
+Original: () -> Array<User>
+# 26
+Difference encountered for ListsController#adjust.
+Inferred: (([ []: (:list) -> { { ListsController#adjust arg: params }#[] ret: ret } ] and [ each_pair: () {({ { ListsController#adjust arg: params }#each_pair block_arg: k }, { { ListsController#adjust arg: params }#each_pair block_arg: v }) -> { { ListsController#adjust arg: params }#each_pair block_ret: block_ret }} -> { { ListsController#adjust arg: params }#each_pair ret: ret } ])) -> [{ name: String }, Array<User>, Array<User>]
+Original: (Hash<(String or Symbol), %any>) -> Array<User>
+# 27 (above original is wrong)
+Difference encountered for TalksController#index.
+Inferred: () -> (Array<String> or String)
+Original: () -> Array<Talk>
+# 28 (original is wrong)
+Difference encountered for TalksController#admin_view.
+Inferred: () -> ActiveRecord_Relation<Talk>
+Original: () -> Array<Talk>
+Difference encountered for TalksController#show.
+Inferred: () -> (Array<String> or String)
+Original: () -> Subscription
+# 30
+Difference encountered for TalksController#edit.
+Inferred: () -> { TalksController#edit ret: ret }
+Original: () -> Array<List>
+Difference encountered for TalksController#show_registrations.
+Inferred: () -> Array<String>
+Original: () -> (Array<String> or Array<User>)
+# 31
+Difference encountered for TalksController#cancel_external_registration.
+Inferred: () -> (Mail::Message or false)
+Original: () -> (false or true)
+# 32 (above original is wrong)
+Difference encountered for TalksController#adjust.
+Inferred: (([ []: (:talk) -> { { TalksController#adjust arg: params }#[] ret: ret } ] and [ []: (:temp_date) -> { { TalksController#adjust arg: params }#[] ret: ret } ] and [ []: (:temp_date_time) -> { { TalksController#adjust arg: params }#[] ret: ret } ] and [ []: (:temp_end_time) -> { { TalksController#adjust arg: params }#[] ret: ret } ] and [ []: (:temp_start_time) -> { { TalksController#adjust arg: params }#[] ret: ret } ] and [ each_pair: () {({ { TalksController#adjust arg: params }#each_pair block_arg: k }, { { TalksController#adjust arg: params }#each_pair block_arg: v }) -> { { TalksController#adjust arg: params }#each_pair block_ret: block_ret }} -> { { TalksController#adjust arg: params }#each_pair ret: ret } ] and [ require: (:talk) -> { { TalksController#adjust arg: params }#require ret: ret } ])) -> [{  }, Array<List>]
+Original: (Hash<(String or Symbol), %any>) -> Array<List>
+# 34
+Difference encountered for UsersController#show.
+Inferred: () -> (Array or Array<Talk>)
+Original: () -> Array<Talk>
+Difference encountered for UsersController#edit.
+Inferred: () -> { UsersController#edit ret: ret }
+Original: () -> %any
+# 36
+Difference encountered for TheMailer#send_talks.
+Inferred: (User, (ActiveRecord_Relation<Talk> or Array<Talk>), String) -> ActionMailer::MessageDelivery
+Original: (User, Array<Talk>, String) -> Mail::Message
+# 40
+Difference encountered for TheMailer#send_external_reg.
+Inferred: (Registration) -> ActionMailer::MessageDelivery
+Original: (Registration) -> Mail::Message
+# 41
+Difference encountered for TheMailer#send_talk_change.
+Inferred: (User, Talk, { TheMailer#send_talk_change arg: changes }) -> ActionMailer::MessageDelivery
+Original: (User, Talk, Set<(:abstract or :bio or :reg or :speaker or :time or :title or :venue)>) -> Mail::Message
+# 44
+Difference encountered for TheMailer#send_feedback.
+Inferred: ({ comments: String, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) -> ActionMailer::MessageDelivery
+Original: (Hash<Symbol, String>) -> Mail::Message
+# 45
+Difference encountered for TheMailer#send_admin_message.
+Inferred: ((Gem::Specification or Registration or User), { message: { { TheMailer#send_admin_message arg: h }#[] ret: ret }, subject: String }) -> ActionMailer::MessageDelivery
+Original: (User, Hash<Symbol, String>) -> Mail::Message
+# 46
+Difference encountered for ApplicationHelper#join_with_and.
+Inferred: (([ []: (-1) -> { { ApplicationHelper#join_with_and arg: a }#[] ret: ret } ] and [ []: (0) -> { { ApplicationHelper#join_with_and arg: a }#[] ret: ret } ] and [ []: (1) -> { { ApplicationHelper#join_with_and arg: a }#[] ret: ret } ] and [ []: (Range<Integer>) -> { { ApplicationHelper#join_with_and arg: a }#[] ret: ret } ] and [ length: () -> { { ApplicationHelper#join_with_and arg: a }#length ret: ret } ])) -> ('' or String or String)
+Original: (Array<String>) -> String
+# 47
+Difference encountered for TalksHelper#render_time.
+Inferred: (Talk) -> { TalksHelper#render_time ret: ret }
+Original: (Talk) -> String
+Difference encountered for TalksHelper#render_array_of_lists.
+Inferred: ((ActiveRecord_Relation<List> or Array<List>)) -> String
+Original: (Array<List>) -> String
+# 50
+Difference encountered for TalksHelper#organize_talks.
+Inferred: ([ each: () {({ { TalksHelper#organize_talks arg: talks }#each block_arg: t }) -> { { TalksHelper#organize_talks arg: talks }#each block_ret: block_ret }} -> { { TalksHelper#organize_talks arg: talks }#each ret: ret } ]) -> { past: Array<{ { TalksHelper#organize_talks arg: talks }#each block_arg: t }>, today: Array<{ { TalksHelper#organize_talks arg: talks }#each block_arg: t }>, later_this_week: (Array<Array<t>> or Array<t>), next_week: (Array<Array<t>> or Array<t>), beyond: Array<{ { TalksHelper#organize_talks arg: talks }#each block_arg: t }>, now: Time }
+Original: (Array<Talk>) -> Hash<(:beyond or :later_this_week or :next_week or :now or :past or :today), (Array<Array<Talk>> or Array<Talk> or Time)>
+Difference encountered for TalksHelper#format_day.
+Inferred: ((ActiveSupport::TimeWithZone or Date or String or TZInfo::Timezone or Time)) -> String
+Original: ((ActiveSupport::TimeWithZone or Date)) -> String
+# 52 manually inspected, determined correct
+Total correct (that could be automatically inferred): 113
+Total potential types: 196
+
+
+# Final: 165/196

@@ -125,7 +125,7 @@ end
 
   def register
     t = Talk.find(params[:id])
-    r = Registration.where(:talk_id => t, :user_id => current_user)
+    r = Registration.where(:talk_id => RDL.type_cast(t, "Integer"), :user_id => current_user)
     raise "Attempt to register for talk without registration" if not t.request_reg
     logger.error "Inconsistency, r is #{r}" if r.length > 1
     case params[:do]
@@ -263,15 +263,15 @@ private
     params.each_pair { |k,v|
       next unless k =~ /posted_(\d+)/
       next if v == ""
-      l = List.find v
+      l = List.find RDL.type_cast(v, "String")
       next unless can? :add_talk, l
       lists << l
     }
 
-    return params.require(:talk).permit(:title, :speaker, :speaker_affiliation,
+    return [params.require(:talk).permit(:title, :speaker, :speaker_affiliation,
       :speaker_url, :room, :building_id, :kind, :request_reg,
       :trigger_watch_email, :owner_id, :abstract, :bio,
-      :reg_info, :start_time, :end_time), lists
+      :reg_info, :start_time, :end_time), lists]
 #    params.require(:talk).permit!
   end
 
