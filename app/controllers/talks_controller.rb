@@ -229,7 +229,7 @@ end
     @subscribers = []
     @subscribers += @talk.subscribers
     @subscribers += (@talk.lists.map { |l| l.subscribers }).flatten
-    @subscribers.sort! { |a,b| a.email_and_name <=> b.email_and_name }
+    RDL.type_cast(@subscribers, "Array<User>").sort! { |a,b| a.email_and_name <=>  b.email_and_name }
     render "shared/show_subscribers"
   end
 

@@ -5,10 +5,11 @@ gem 'rails', '4.2.10'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'rdl', path: "~/Documents/works/type-infer/rdl" #git: 'https://github.com/plum-umd/rdl.git', branch: 'infer'
+#gem 'rdl', git: 'https://github.com/tupl-tufts/rdl.git', branch: 'infer'
+gem 'rdl', git: "https://github.com/mckaz/dsl-infer-rdl.git"#path: "~/Documents/works/tmp-rdl/rdl"
 gem 'pry'
 gem 'mysql2'#, '~> 0.3.18'  # workaround for bug with rails 4.2
-gem 'sqlite3'
+gem 'sqlite3', "~> 1.3.6"
 gem 'execjs'
 gem 'therubyracer'
 gem 'ri_cal'

@@ -173,7 +173,7 @@ class Talk < ActiveRecord::Base
   def email_watchers(changes)
     to_email = []
     to_email += subscribers # all direct subscribers
-    to_email += (lists.map { |l| l.subscribers }).flatten # all indirect subscribers
+    to_email += RDL.type_cast((lists.map { |l| l.subscribers }).flatten, "Array<User>") # all indirect subscribers
 
     to_email.uniq.each do |u|
       TheMailer.send_talk_change(u, self, changes).deliver_now

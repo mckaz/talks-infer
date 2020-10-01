@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     else
       @talks = current_user.owned_talks.past
     end
-    @talks += @talk_subscriptions.keys
+    @talks += RDL.type_cast(@talk_subscriptions.keys, "Array<Talk>")
     @talks.uniq!
     if params[:range] == :past
       @talks.sort! { |a,b| [b.start_time.beginning_of_day, a.start_time] <=> [a.start_time.beginning_of_day, b.start_time] }
