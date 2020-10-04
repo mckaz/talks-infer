@@ -6,7 +6,7 @@ gem 'rails', '4.2.10'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 #gem 'rdl', git: 'https://github.com/tupl-tufts/rdl.git', branch: 'infer'
-gem 'rdl', git: "https://github.com/mckaz/dsl-infer-rdl.git"#path: "~/Documents/works/tmp-rdl/rdl"
+gem 'rdl', path: "~/dsl-infer-rdl"#path: "~/Documents/works/tmp-rdl/rdl"
 gem 'pry'
 gem 'mysql2'#, '~> 0.3.18'  # workaround for bug with rails 4.2
 gem 'sqlite3', "~> 1.3.6"
