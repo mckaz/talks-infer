@@ -1,0 +1,920 @@
+Class,Method,Inferred Type,Original Type,Source Code,Comments
+User,name_and_email,() -> String,() -> String,"def name_and_email
+    ""#{name} &lt;#{email}&gt;"".sanitize
+  end"
+User,email_and_name,() -> String,() -> String,"def email_and_name
+    ""#{email} (#{name})"".sanitize
+  end"
+User,subscribed_lists,"() -> Array<[List, String]>",() -> Array<Array<(List or Symbol)>>,"def subscribed_lists
+    subscriptions.where(:subscribable_type => ""List"").map { |s| [List.find(s.subscribable_id), s.kind] }
+  end"
+User,subscribed_talks,"(([ ==: (:all) -> XXX ] and [ ==: (:current) -> XXX ] and [ ==: (:past) -> XXX ] and [ ==: (:this_week) -> XXX ] and [ ==: (:today) -> XXX ] and [ ==: (:upcoming) -> XXX ] and [ inspect: () -> XXX ]), ?[ member?: (String) -> XXX ]) -> Hash<Talk, String>","(Symbol) -> Hash<Talk, (String or Symbol)>","def subscribed_talks(range, filter = [""kind_subscriber"", ""kind_subscriber_through"", ""kind_watcher"", ""kind_watcher_through""])
+    raise ""Argument #{range.inspect} out of range"" unless [:past, :today, :this_week, :upcoming, :current, :all].member? range
+    talks = {} # map from talk to kind
+
+    # directly subscribed talks
+    subscriptions
+      .where(:subscribable_type => ""Talk"")
+      .map do |s|
+        t = Talk.find(s.subscribable_id)
+        talks[t] = s.kind if (t.match_range range) && (filter.member? s.kind)
+      end
+
+    # subscriptions via lists, whicih take precedence over directly subscribing/watching
+    subscribed_lists.each do |l,k|
+      l.talks.each do |t|
+        if t.match_range range then
+          case k
+          when ""kind_subscriber""
+            talks[t] = ""kind_subscriber_through"" if filter.member? ""kind_subscriber_through""
+          when ""kind_watcher""
+            talks[t] = ""kind_watcher_through"" if (talks[t] != ""kind_subscriber"") && (filter.member? ""kind_watcher_through"")
+          end
+        end
+      end
+    end
+
+    return talks
+  end"
+Talk,extended_title,() -> String,() -> String,"def extended_title
+    if kind == :standard
+      title
+    else
+      ""#{kind_text}: #{title}""
+    end
+  end"
+Talk,start_end_same_day,() -> Array<String>,() -> Array<String>,"def start_end_same_day
+    if start_time && end_time && (start_time.to_date != end_time.to_date)
+      errors.add(:internal_error, ""- start time and end time must be on same day"")
+    end
+  end"
+Talk,start_end_not_error,() -> Array<String>,() -> Array<String>,"def start_end_not_error
+    errors.add(:start_time, ""- Invalid start time"") if not start_time
+    errors.add(:end_time, ""- Invalid end time"") if not end_time
+  end"
+Talk,start_less_than_end,() -> Array<String>,() -> Array<String>,"def start_less_than_end
+    errors.add(:end_time, ""- End time must be greater than start time"") if (start_time && end_time && (not (end_time > start_time)))
+  end"
+Talk,at_least_one_list,() -> Array<String>,() -> Array<String>,"def at_least_one_list
+    errors[:base] << ""A talk must belong to at least one list"" if lists.length < 1
+  end"
+Talk,past?,() -> (false or true),() -> (false or true),"def past?
+    end_time < Time.zone.now.beginning_of_day
+  end"
+Talk,upcoming?,() -> (false or true),() -> (false or true),"def upcoming?
+    end_time >= Time.zone.now
+  end"
+Talk,current?,() -> (false or true),() -> (false or true),"def current?
+    (end_time >= Time.zone.now.beginning_of_day)
+  end"
+Talk,today?,() -> (false or true),() -> (false or true),"def today?
+    (end_time >= Time.zone.now.beginning_of_day) && (start_time < Time.zone.now.end_of_day)
+  end"
+Talk,this_week?,() -> (false or true),() -> (false or true),"def this_week?
+    (end_time >= (Time.zone.now + 1.day).beginning_of_week - 1.day) && (start_time < (Time.zone.now + 1.day).end_of_week - 1.day)
+  end"
+Talk,later_this_week?,() -> (false or true),() -> (false or true),"def later_this_week?
+    (not past?) && (end_time >= (Time.zone.now + 1.day).beginning_of_week - 1.day) && (start_time < (Time.zone.now + 1.day).end_of_week - 1.day)
+  end"
+Talk,next_week?,() -> (false or true),() -> (false or true),"def next_week?
+    (end_time >= (Time.zone.now + 1.day).beginning_of_week + 6.day) && (start_time < (Time.zone.now + 1.day).end_of_week + 6.day)
+  end"
+Talk,further_ahead?,() -> (false or true),() -> (false or true),"def further_ahead?
+    (end_time >= (Time.zone.now + 1.day).beginning_of_week + 13.day)
+  end"
+Talk,match_range,(([ ==: (:all) -> XXX ] and [ ==: (:current) -> XXX ] and [ ==: (:past) -> XXX ] and [ ==: (:this_week) -> XXX ] and [ ==: (:today) -> XXX ] and [ ==: (:upcoming) -> XXX ])) -> (false or true),(Symbol) -> (false or true),"def match_range(range)
+    (range == :all) ||
+      (range == :past && past?) ||
+      (range == :upcoming && upcoming?) ||
+      (range == :current && current?) ||
+      (range == :today && today?) ||
+      (range == :this_week && this_week?)
+  end"
+Talk,owner?,(User) -> (false or true),(User) -> (false or true),"def owner?(user)
+    return owner == user
+  end"
+Talk,poster?,(User) -> false,(User) -> (false or true),"def poster?(user)
+    return false
+  end"
+Talk,subscriber?,(User) -> (false or true),(User) -> (false or true),"def subscriber?(user)
+    s = subscription(user)
+    return s && (s.kind == ""kind_subscriber"")
+  end"
+Talk,watcher?,(User) -> (false or true),(User) -> (false or true),"def watcher?(user)
+    s = subscription(user)
+    return s && (s.kind == ""kind_watcher"")
+  end"
+Talk,registered?,(User) -> (false or true),(User) -> (false or true),"def registered?(user)
+    not (registrations.where(:user_id => user.id).empty?)
+  end"
+Talk,through,"(User) -> { subscriber: Array<(List or XXX)>, watcher: Array<(List or XXX)> }",(User) -> (:kind_subscriber_through or :kind_watcher_through),"def through(user)
+    h = Hash.new RDL.type_cast([], ""Array<List>"")
+    return h unless user
+    user.subscribed_lists.each do |l, kl|
+      if l.talks.exists? self.id then
+        if kl == ""kind_subscriber""
+          h[:subscriber] += [l]
+        elsif kl == ""kind_watcher""
+          h[:watcher] += [l]
+        end
+      end
+    end
+    return h
+  end"
+Talk,email_watchers,(XXX) -> Array<(User or XXX)>,(Set<(:abstract or :bio or :reg or :speaker or :time or :title or :venue)>) -> Array<User>,"def email_watchers(changes)
+    to_email = []
+    to_email += subscribers # all direct subscribers
+    to_email += RDL.type_cast((lists.map { |l| l.subscribers }).flatten, ""Array<User>"") # all indirect subscribers
+
+    to_email.uniq.each do |u|
+      TheMailer.send_talk_change(u, self, changes).deliver_now
+    end
+  end"
+[s]Talk,upcoming,() -> ActiveRecord_Relation<Talk>,() -> ActiveRecord_Relation<Talk>,"def self.upcoming
+    # use end_time so talks going on now still appear
+    where(""end_time >= ?"", Time.zone.now)
+  end"
+[s]Talk,past,() -> ActiveRecord_Relation<Talk>,() -> ActiveRecord_Relation<Talk>,"def self.past
+    where(""end_time < ? and end_time >= ?"", Time.zone.now.beginning_of_day, Time.zone.now - 1.year)
+  end"
+[s]Talk,current,() -> ActiveRecord_Relation<Talk>,() -> ActiveRecord_Relation<Talk>,"def self.current
+    where(""end_time >= ?"", Time.zone.now.beginning_of_day)
+  end"
+[s]Talk,today,() -> ActiveRecord_Relation<Talk>,() -> ActiveRecord_Relation<Talk>,"def self.today
+    where(""end_time >= ? and start_time < ?"", Time.zone.now.beginning_of_day, Time.zone.now.end_of_day)
+  end"
+[s]Talk,this_week,() -> ActiveRecord_Relation<Talk>,() -> ActiveRecord_Relation<Talk>,"def self.this_week
+    where(""end_time >= ? and start_time < ?"", (Time.zone.now + 1.day).beginning_of_week - 1.day, (Time.zone.now + 1.day).end_of_week - 1.day)
+  end"
+Building,abbrv_and_name,() -> String,() -> String,"def abbrv_and_name
+    return abbrv if name == """" || name.nil?
+    return ""#{abbrv} - #{name}""
+  end"
+List,subscription,(User) -> Subscription,(User) -> Subscription,"def subscription(user)
+    s = Subscription.where(:subscribable_id => id, :subscribable_type => ""List"", :user_id => user.id)
+    return nil if s.length == 0
+    return s.first if s.length == 1
+    logger.error ""Multiple subscriptions #{s}""
+    return nil
+  end"
+List,owner?,(User) -> (false or true),(User) -> (false or true),"def owner?(user)
+    return owners.include? user
+  end"
+List,poster?,(User) -> (false or true),(User) -> (false or true),"def poster?(user)
+    return posters.include? user
+  end"
+List,watcher?,(User) -> XXX,(User) -> (false or true),"def watcher?(user)
+    s = subscription(user)
+    return s && (s.kind == ""kind_watcher"")
+  end"
+List,subscriber?,(User) -> (XXX or XXX),(User) -> (false or true),"def subscriber?(user)
+    s = subscription(user)
+    return s && (s.kind == ""kind_subscriber"")
+  end"
+AdminController,index,() -> nil,() -> nil,"def index
+  end"
+AdminController,spam,() -> nil,() -> nil,"def spam
+  end"
+AdminController,send_spam,() -> String,() -> String,"def send_spam
+#    AdminController.delay.spam_users(:subject => params[:subject], :message => params[:message])
+    redirect_to admin_index_path, :notice => ""Sending message to all users...""
+  end"
+[s]AdminController,spam_users,(([ []: (:message) -> XXX ] and [ []: (:subject) -> XXX ])) -> (false or true),"(Hash<Symbol, String>) -> (false or true)","def self.spam_users(h)
+    User.all.each do |u|
+      if u.confirmed_at
+        TheMailer.send_admin_message(u, h).deliver_now
+      end
+    end
+    logger.debug ""Messages delivered.""
+  end"
+ApplicationController,require_site_admin,() -> XXX,() -> %any,"def require_site_admin
+    authorize! :site_admin, :all
+  end"
+ApplicationController,generate_ical,((ActiveRecord_Relation<Talk> or Array<Talk>)) -> XXX,(Array<Talk>) -> RiCal::Component::Calendar,"def generate_ical(talks)
+    coder = HTMLEntities.new
+    cal = RiCal.Calendar do |cal|
+      talks.each do |t|
+        cal.event do |event|
+          event.summary = ""#{t.speaker} - #{t.title}""
+          event.dtstart = t.start_time.in_time_zone(""US/Eastern"")
+          event.dtend = t.end_time.in_time_zone(""US/Eastern"")
+          if t.room && t.building
+            event.location = ""#{t.room} #{t.building.abbrv}""
+          elsif t.room
+            event.location = t.room
+          end
+	        event.url = talk_url(t)
+          # notes = """"
+          # unless t.abstract.empty?
+	        #    notes = coder.decode(ActionController::Base.helpers.strip_tags(t.abstract))
+          # else
+	        #    notes = ""(No abstract yet)""
+	        # end
+	        # unless t.bio.empty?
+	        #    notes << ""Bio: "" << coder.decode(ActionController::Base.helpers.strip_tags(t.bio))
+	        # end
+	        # event.description = notes
+        end
+      end
+    end
+  end"
+ApplicationController,fix_range,"(([ []: (:range) -> XXX ] and [ []=: (:range, :current) -> XXX ])) -> :current","(Hash<(String or Symbol), %any>) -> Symbol","def fix_range(params)
+    params[:range] = :current unless params[:range]
+    params[:range] = params[:range].to_sym
+  end"
+BuildingsController,index,() -> Array<Building>,() -> Array<Building>,"def index
+    authorize! :edit_buildings, :all
+    @buildings = Building.all.sort { |a, b| a.abbrv <=> b.abbrv }
+  end"
+BuildingsController,update,() -> String,() -> (Array<String> or String),"def update
+    authorize! :edit_buildings, :all
+    msg = """"
+    if (params[:building_abbrv_new] != """") || (params[:building_name_new] != """") || (params[:building_url_new] != nil)
+      logger.info "">> #{params[:building_abbrv_new].inspect}, #{params[:building_name_new].inspect}, #{params[:building_url_new].inspect}""
+      b = Building.new(:abbrv => params[:building_abbrv_new],
+                          :name => params[:building_name_new],
+                          :url => params[:building_url_new])
+      b.save
+      msg << ""New building: "" << b.errors.full_messages.join("" "") << ""<br/>"" if not (b.errors.empty?)
+    end
+    params.each_pair do |k,v|
+      next unless k =~ /^building_(.*)_(\d+)/
+      b = Building.find($2)
+      case $1
+      when ""abbrv"", ""name"", ""url"" # only valid attrs
+        next if b.send($1) == v   # unchanged
+        old_abbrv = b.abbrv
+        b.send(""#{$1}="", v)       # set value
+        b.save
+        msg << ""#{old_abbrv}: "" + b.errors.full_messages.join("" "") << ""<br/>"" if not (b.errors.empty?)
+      else
+        next
+      end
+    end
+    redirect_to buildings_index_path, :alert => msg.sanitize
+  end"
+BuildingsController,destroy,() -> String,() -> String,"def destroy
+    authorize! :edit_buildings, :all
+    b = Building.find(params[:id])
+    abbrv = b.abbrv
+    b.destroy
+    redirect_to buildings_index_path, :alert => ""Building #{abbrv} deleted""
+  end"
+JobsController,index,() -> Array<Delayed::Backend::ActiveRecord::Job>,() -> Array<Delayed::Job>,"def index
+    @jobs = Delayed::Job.all.sort { |a,b| a.created_at <=> b.created_at }
+  end"
+JobsController,delete,() -> String,() -> String,"def delete
+    @job = Delayed::Job.find(params[:id])
+    tm = @job.created_at
+    @job.destroy
+    flash[:notice] = ""Deleted job that was created at #{tm}""
+
+    redirect_to jobs_index_path
+  end"
+JobsController,delete_all,() -> String,() -> String,"def delete_all
+    Delayed::Job.all.each { |j|
+      j.destroy
+    }
+    flash[:notice] = ""Deleted all jobs""
+
+    redirect_to jobs_index_path
+  end"
+JobsController,do_start,() -> String,() -> String,"def do_start
+    runcmd ""#{::Rails.root}/script/delayed_job restart""
+    flash[:notice] = @out.sanitize
+    redirect_to jobs_index_path
+  end"
+JobsController,do_stop,() -> String,() -> String,"def do_stop
+    runcmd ""#{::Rails.root}/script/delayed_job stop""
+    flash[:notice] = @out.sanitize
+    redirect_to jobs_index_path
+  end"
+JobsController,do_restart,() -> String,() -> String,"def do_restart
+    runcmd ""#{::Rails.root}/script/delayed_job restart""
+    flash[:notice] = @out.sanitize
+    redirect_to jobs_index_path
+  end"
+JobsController,do_reload,() -> String,() -> String,"def do_reload
+    runcmd ""#{::Rails.root}/script/delayed_job reload""
+    flash[:notice] = @out.sanitize
+    redirect_to jobs_index_path
+  end"
+JobsController,do_status,() -> String,() -> String,"def do_status
+    runcmd ""#{::Rails.root}/script/delayed_job status""
+    flash[:notice] = @out.sanitize
+    redirect_to jobs_index_path
+  end"
+JobsController,runcmd,(XXX) -> String,(String) -> String,"def runcmd(cmd)
+    @out = """" if not @out
+    @success = true if @success == nil
+    @out << ""<span class=\""command\"">shell$ #{cmd}</span><br/>""
+    res = `#{cmd} 2>&1`
+    @out << res.gsub(""\n"", ""<br/>"")
+    if $?.exitstatus != 0 then
+      error ""Command returned #{$?.exitstatus}""
+    end
+    res
+  end"
+JobsController,error,(XXX) -> false,(String) -> false,"def error(s)
+    @out = """" if not @out
+    logger.error ""ERROR: #{s}""
+    @out << ""<span class=\""error\"">#{s}</span><br/>""
+    @success = false
+  end"
+ListsController,index,() -> Array<List>,() -> Array<List>,"def index
+    @lists = List.all.sort { |a,b| a.name <=> b.name }
+  end"
+ListsController,show,() -> (Array<String> or String),() -> %any,"def show
+    @list = List.find(params[:id])
+    @lists = List.all.sort { |a,b| a.name <=> b.name }
+    fix_range params
+    case params[:range]
+    when :past
+      @talks = @list.talks.past.sort { |a,b| [b.start_time.beginning_of_day, a.start_time] <=> [a.start_time.beginning_of_day, b.start_time] }
+      @current = false
+    when :all
+      @talks = @list.talks.sort { |a,b| a.start_time <=> b.start_time }
+    else
+      @talks = @list.talks.current.sort { |a,b| a.start_time <=> b.start_time }
+      @current = true
+    end
+    respond_to do |format|
+      format.html
+      format.json
+    end
+  end"
+ListsController,new,() -> Array<String>,() -> Array<String>,"def new
+    authorize! :create, List
+    @list = List.new
+    @title = ""Create new list""
+    @owners = []
+    @posters = []
+    @users = User.order(:email)
+    render :action => ""edit""
+  end"
+ListsController,edit,() -> ActiveRecord_Relation<User>,() -> Array<User>,"def edit
+    @list = List.find(params[:id])
+    authorize! :edit, @list
+    compute_edit_fields
+  end"
+ListsController,compute_edit_fields,() -> ActiveRecord_Relation<User>,() -> Array<User>,"def compute_edit_fields
+    @title = ""Edit list""
+    @owners = @list.owners.sort { |a,b| a.email_and_name <=> b.email_and_name }
+    @posters = @list.posters.sort { |a,b| a.email_and_name <=> b.email_and_name }
+    @users = User.order(:email)
+  end"
+ListsController,create,() -> (Array<String> or String),() -> (Array<String> or String),"def create
+    authorize! :create, List
+    list_params, owners, posters = adjust params
+    @list = List.new(list_params)
+    @list.owners = owners
+    @list.posters = posters
+
+    if @list.save
+      redirect_to @list, notice: 'List was successfully created.'
+    else
+      compute_edit_fields
+      render action: ""edit""
+    end
+  end"
+ListsController,update,() -> (Array<String> or String),() -> (Array<String> or String),"def update
+    @list = List.find(params[:id])
+    authorize! :edit, @list
+    list_params, owners, posters = adjust params
+    if not (can? :edit_name, @list) then
+      list_params.delete :name
+    end
+
+    @list.attributes = list_params
+    @list.owners = owners
+    @list.posters = posters
+
+    if @list.save
+      redirect_to @list, notice: 'List was successfully updated.'
+    else
+      compute_edit_fields
+      render action: ""edit""
+    end
+  end"
+ListsController,destroy,() -> String,() -> String,"def destroy
+    @list = List.find(params[:id])
+    authorize! :destroy, @list
+    @list.destroy
+
+    redirect_to root_path
+  end"
+ListsController,subscribe,() -> (Array<String> or String),() -> (Array<String> or String),"def subscribe
+    l = List.find(params[:id])
+    do_subscription(l, params[:do])
+    respond_to do |format|
+      format.js { render ""shared/_update_badges.js.erb"", :locals => { :subscribable => l } }
+      format.html { redirect_to action: ""show"" }
+    end
+  end"
+ListsController,feed,() -> (Array<String> or String),() -> (Array<String> or String),"def feed
+    @list = List.find(params[:id])
+    @title = @list.name
+    @talks = @list.talks
+    respond_to do |format|
+      format.ics { render :text => (generate_ical @list.talks) }
+      format.atom { render ""shared/feed"", :layout => false  }
+    end
+  end"
+ListsController,show_subscribers,() -> Array<String>,() -> Array<String>,"def show_subscribers
+    authorize! :site_admin, :all
+    @list = List.find(params[:id])
+    @subscribers = @list.subscribers.sort { |a,b| a.email_and_name <=> b.email_and_name }
+    render ""shared/show_subscribers""
+  end"
+ListsController,adjust,"(([ []: (:list) -> XXX ] and [ each_pair: () {(XXX, XXX) -> XXX} -> XXX ])) -> [{ name: String }, Array<XXX>, Array<XXX>]","(Hash<(String or Symbol), %any>) -> Array<User>","def adjust(params)
+    owners = []
+    params.each_pair { |k,v|
+      next unless k =~ /owner_(\d+)/
+      next if v == """"
+      owners << User.find(RDL.type_cast(v, ""String""))
+    }
+
+    posters = []
+    params.each_pair { |k,v|
+      next unless k =~ /poster_(\d+)/
+      next if v == """"
+      posters << User.find(RDL.type_cast(v, ""String""))
+    }
+    return [params[:list].permit(:name, :short_descr, :long_descr),
+      owners, posters]
+  end"
+TalksController,index,() -> (Array<String> or String),() -> Array<Talk>,"def index
+    fix_range params
+    if params[:range] == :past
+      @talks = Talk.past.sort { |a,b|
+        [b.start_time.beginning_of_day, a.start_time] <=> [a.start_time.beginning_of_day, b.start_time]
+      }
+      @current = false
+    elsif params[:range] == :all
+      @talks = Talk.all_recent.sort { |a,b| a.start_time <=> b.start_time }
+    else
+      @talks = Talk.current.sort { |a,b| a.start_time <=> b.start_time }
+      @current = true
+    end
+    @lists = List.all.sort { |a,b| a.name <=> b.name }
+    respond_to do |format|
+      format.html
+      format.json
+    end
+end"
+TalksController,admin_view,() -> ActiveRecord_Relation<Talk>,() -> Array<Talk>,"def admin_view
+    authorize! :site_admin, :all
+    @talks = Talk.all
+  end"
+TalksController,new,() -> Array<String>,() -> Array<String>,"def new
+    authorize! :create, Talk
+    @talk = Talk.new(:kind => :standard)
+    @title = ""Create new talk""
+    @posted = []
+    @talk.owner = current_user
+    if can? :site_admin, :all then
+      @lists = List.all.sort { |a,b| a.name <=> b.name }
+    else
+      @lists = (current_user.owned_lists + current_user.poster_lists).sort { |a,b| a.name <=> b.name }.uniq
+    end
+    @talk.trigger_watch_email = true
+    render :action => ""edit""
+  end"
+TalksController,show,() -> (Array<String> or String),() -> Subscription,"def show
+    @talk = Talk.find(params[:id])
+    @subscription = @talk.subscription current_user if current_user
+    @lists = List.all.sort { |a,b| a.name <=> b.name }
+    respond_to do |format|
+      format.html
+      format.json
+    end
+  end"
+TalksController,create,() -> (Array<String> or String),() -> (Array<String> or String),"def create
+    authorize! :create, Talk
+    talk_params, lists = adjust params
+    @talk = Talk.new(talk_params)
+    @talk.lists = lists
+    @talk.owner = current_user unless can? :edit_owner, @talk
+    if @talk.save
+      if params[:talk][:trigger_watch_email] == ""1""
+#        @talk.delay.email_watchers(nil)
+        redirect_to @talk, :notice => ""Sending talk creation notification to subscribers and watchers...""
+      else
+        redirect_to @talk
+      end
+    else
+      compute_edit_fields
+      render :action => ""edit""
+    end
+  end"
+TalksController,edit,() -> XXX,() -> Array<List>,"def edit
+    @talk = Talk.find(params[:id])
+    authorize! :edit, @talk
+    compute_edit_fields
+    @talk.trigger_watch_email = false
+  end"
+TalksController,update,() -> (Array<String> or String),() -> (Array<String> or String),"def update
+    @talk = Talk.find(params[:id])
+    @talk_old = @talk.dup
+    authorize! :edit, @talk
+    talk_params, lists = adjust params
+    @talk.lists = lists
+    if @talk.update(talk_params)
+      if talk_params[:trigger_watch_email] == ""1""
+        changes = Set.new
+        changes << :title if @talk_old.title != @talk.title
+        changes << :speaker if ((@talk_old.speaker != @talk.speaker) || (@talk_old.speaker_url != @talk.speaker_url))
+        changes << :venue if ((@talk_old.room != @talk.room) || (@talk_old.building != @talk.building))
+        changes << :time if ((@talk_old.start_time != @talk.start_time) || (@talk_old.end_time != @talk.end_time))
+        changes << :abstract if (@talk_old.abstract != @talk.abstract)
+        changes << :bio if (@talk_old.bio != @talk.bio)
+        changes << :reg if (@talk_old.request_reg != @talk.request_reg)
+        if changes.empty?
+          redirect_to @talk
+        else
+#          @talk.delay.email_watchers(changes)
+          redirect_to @talk, :notice => ""Sending talk update notification to subscribers and watchers...""
+        end
+      else
+        redirect_to @talk
+      end
+    else
+      compute_edit_fields
+      render :action => ""edit""
+    end
+  end"
+TalksController,destroy,() -> String,() -> String,"def destroy
+    @talk = Talk.find(params[:id])
+    authorize! :edit, @talk
+    @talk.destroy
+    redirect_to talks_path
+  end"
+TalksController,subscribe,() -> (Array<String> or String),() -> (Array<String> or String),"def subscribe
+    t = Talk.find(params[:id])
+    do_subscription(t, params[:do])
+    respond_to do |format|
+      format.js { render ""shared/_update_badges.js.erb"", :locals => { :subscribable => t } }
+      format.html { redirect_to action: ""show"" }
+    end
+  end"
+TalksController,register,() -> (Array<String> or String),() -> (Array<String> or String),"def register
+    t = Talk.find(params[:id])
+    r = Registration.where(:talk_id => RDL.type_cast(t, ""Integer""), :user_id => current_user)
+    raise ""Attempt to register for talk without registration"" if not t.request_reg
+    logger.error ""Inconsistency, r is #{r}"" if r.length > 1
+    case params[:do]
+    when ""register""
+      if r.empty?
+        r = Registration.new(:talk_id => t.id, :user_id => current_user.id)
+        r.save
+      end
+    when ""unregister""
+      r[0].destroy if r[0]
+    end
+    respond_to do |format|
+      format.js { render ""shared/_update_badges.js.erb"", :locals => { :subscribable => t } }
+      format.html { redirect_to action: ""show"" }
+    end
+  end"
+TalksController,show_registrations,() -> Array<String>,() -> (Array<String> or Array<User>),"def show_registrations
+    @talk = Talk.find(params[:id])
+    raise ""Attempt to register for talk without registration"" if not @talk.request_reg
+    authorize! :edit, @talk
+    @regs = @talk.registrations
+    @users = User.all.sort { |a,b| a.email_and_name <=> b.email_and_name }
+    if params[:csv] == ""true""
+      render :show_registrations_csv, :layout => false, :content_type => ""text/csv""
+    end
+  end"
+TalksController,cancel_registration,() -> String,() -> String,"def cancel_registration
+    r = Registration.find(params[:id])
+    t = r.talk
+    authorize! :edit, r.talk
+#    raise ""Attempt to register for talk without registration"" if not t.request_reg
+    r.destroy
+    redirect_to show_registrations_talk_path(t)
+  end"
+TalksController,external_register,() -> (Array<String> or Mail::Message),() -> (Array<String> or Mail::Message),"def external_register
+    @talk = Talk.find(params[:id])
+    raise ""Attempt to register for talk without registration"" if not @talk.request_reg
+    @reg = Registration.new(:talk_id => @talk.id,
+                            :user_id => 0,
+                            :name => params[:name],
+                            :email => params[:email],
+                            :organization => params[:organization],
+                            :secret => SecureRandom.base64,
+                            )
+    if @reg.save
+      TheMailer.send_external_reg(@reg).deliver_now
+    else
+      render :action => :show
+    end
+  end"
+TalksController,cancel_external_registration,() -> false,() -> (false or true),"def cancel_external_registration
+    @reg = Registration.find(params[:registration])
+    if @reg && (@reg.secret == params[:secret])
+      @reg.destroy
+      @success = true
+      TheMailer.send_cancel_reg(@reg).deliver_now
+    else
+      @success = false
+    end
+  end"
+TalksController,feed,() -> (Array<String> or String),() -> (Array<String> or String),"def feed
+    @talks = Talk.all_recent.sort { |a,b| a.start_time <=> b.start_time }
+    @title = t :site_name
+    respond_to do |format|
+      format.ics { render :text => (generate_ical @talks) }
+      format.atom { render ""shared/feed"", :layout => false  }
+    end
+  end"
+TalksController,calendar,() -> (Array<String> or String),() -> (Array<String> or String),"def calendar
+    @talk = Talk.find(params[:id])
+    respond_to do |format|
+      format.ics { render :text => (generate_ical [@talk]) }
+    end
+  end"
+TalksController,show_subscribers,() -> Array<String>,() -> Array<String>,"def show_subscribers
+    authorize! :site_admin, :all
+    @talk = Talk.find(params[:id])
+    @subscribers = []
+    @subscribers += @talk.subscribers
+    @subscribers += (@talk.lists.map { |l| l.subscribers }).flatten
+    RDL.type_cast(@subscribers, ""Array<User>"").sort! { |a,b| a.email_and_name <=>  b.email_and_name }
+    render ""shared/show_subscribers""
+  end"
+TalksController,feedback,() -> Array<List>,() -> Array<List>,"def feedback
+    @lists = List.all.sort { |a,b| a.name <=> b.name }
+  end"
+TalksController,receive_feedback,() -> String,() -> String,"def receive_feedback
+    TheMailer.send_feedback(:name => params[:name].truncate(255), :email => params[:email].truncate(255), :subject => params[:subject].truncate(255), :comments => params[:comments].truncate(5000)).deliver_now
+    redirect_to root_path, :notice => ""Thank you for your feedback""
+  end"
+TalksController,adjust,"(([ []: (:talk) -> XXX ] and [ []: (:temp_date) -> XXX ] and [ []: (:temp_date_time) -> XXX ] and [ []: (:temp_end_time) -> XXX ] and [ []: (:temp_start_time) -> XXX ] and [ each_pair: () {(XXX, XXX) -> XXX} -> XXX ] and [ require: (:talk) -> XXX ])) -> [{  }, Array<XXX>]","(Hash<(String or Symbol), %any>) -> Array<List>","def adjust(params)
+    if params[:temp_date_time] != """" then
+      # TODO: handle parsing errors here
+      if (params[:temp_date_time] =~ /(.*) from (.*) to (.*)/) || (params[:temp_date_time] =~ /(.*) from (.*)\s*-\s*(.*)/) then
+        params[:talk][:start_time] = Chronic.parse(""#{$1} at #{$2}"")
+        params[:talk][:end_time] = Chronic.parse(""#{$1} at #{$3}"")
+      else
+        params[:talk][:start_time] = params[:talk][:end_time] = nil
+      end
+    else
+      params[:talk][:start_time] = Chronic.parse(""#{params[:temp_date]} #{params[:temp_start_time]}"")
+      params[:talk][:end_time] = Chronic.parse(""#{params[:temp_date]} #{params[:temp_end_time]}"")
+#      errors.add(nil, ""Malformed date or time"") if not (params[:talk][:start_time] && params[:talk][:end_time])
+    end
+
+    lists = []
+    params.each_pair { |k,v|
+      next unless k =~ /posted_(\d+)/
+      next if v == """"
+      l = List.find RDL.type_cast(v, ""String"")
+      next unless can? :add_talk, l
+      lists << l
+    }
+
+    return [params.require(:talk).permit(:title, :speaker, :speaker_affiliation,
+      :speaker_url, :room, :building_id, :kind, :request_reg,
+      :trigger_watch_email, :owner_id, :abstract, :bio,
+      :reg_info, :start_time, :end_time), lists]
+#    params.require(:talk).permit!
+  end"
+TalksController,compute_edit_fields,() -> Array<List>,() -> Array<List>,"def compute_edit_fields
+    @title = ""Edit talk""
+    if @talk.start_time && @talk.end_time
+      @date = @talk.start_time.strftime(""%m/%d/%Y"")
+      @start_time = @talk.start_time.strftime(""%l:%M %P"").lstrip
+      @end_time = @talk.end_time.strftime(""%l:%M %P"").lstrip
+    end
+    @posted = @talk.lists
+    if can? :site_admin, :all then
+      @lists = List.all.sort { |a,b| a.name <=> b.name }
+    else
+      @lists = (current_user.owned_lists + current_user.poster_lists).sort { |a,b| a.name <=> b.name }.uniq
+    end
+  end"
+UsersController,index,() -> Array<User>,() -> Array<User>,"def index
+    authorize! :site_admin, :all
+    @users = User.all.sort { |a,b| a.email <=> b.email }
+  end"
+UsersController,show,() -> Array<Talk>,() -> Array<Talk>,"def show
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+    fix_range params
+    if params[:range] == :past
+      @current = false
+    else
+      @current = true
+    end
+    @list_subscriptions = Hash[current_user.subscribed_lists]
+    @your_lists = (current_user.owned_lists + current_user.poster_lists + @list_subscriptions.keys).sort { |a,b| a.name <=> b.name }.uniq
+    @lists = List.all.sort { |a,b| a.name <=> b.name }
+    @talk_subscriptions = current_user.subscribed_talks(params[:range])
+    if @current then
+      @talks = current_user.owned_talks.current
+    else
+      @talks = current_user.owned_talks.past
+    end
+    @talks += RDL.type_cast(@talk_subscriptions.keys, ""Array<Talk>"")
+    @talks.uniq!
+    if params[:range] == :past
+      @talks.sort! { |a,b| [b.start_time.beginning_of_day, a.start_time] <=> [a.start_time.beginning_of_day, b.start_time] }
+    else
+      @talks.sort! { |a,b| a.start_time <=> b.start_time }
+    end
+  end"
+UsersController,edit,() -> XXX,() -> %any,"def edit
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+  end"
+UsersController,update,() -> (Array<String> or String),() -> (Array<String> or String),"def update
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+    up = user_params
+    if up[:password].blank?
+      up.delete :password
+      up.delete :password_confirmation
+    end
+    unless can? :site_admin, :all
+      up.delete :perm_site_admin
+      up.delete :perm_create_talk
+    end
+    if @user.update(up)
+      redirect_to @user
+    else
+      render :action => ""edit""
+    end
+  end"
+UsersController,destroy,() -> String,() -> String,"def destroy
+    @user = User.find(params[:id])
+    authorize! :site_admin, :all
+    @user.destroy
+    redirect_to users_path
+  end"
+UsersController,feed,() -> (Array<String> or String),() -> (Array<String> or String),"def feed
+    user = User.find(params[:id])
+    @title = ""Your Talks""
+    @talks = user.subscribed_talks(:all, [""kind_subscriber"", ""kind_subscriber_through""]).keys
+    respond_to do |format|
+      if params[:key] == user.ical_secret
+        format.ics { render :text => (generate_ical @talks) }
+        format.atom { render ""shared/feed"", :layout => false  }
+      else
+        format.ics { render :nothing => true, :status => :forbidden }
+        format.atom { render :nothing => true, :status => :forbidden }
+      end
+    end
+  end"
+UsersController,reset_ical_secret,() -> String,() -> String,"def reset_ical_secret
+    @user = User.find(params[:id])
+    authorize! :edit, @user
+    @user.update_attribute(:ical_secret, nil)
+    redirect_to users_path, :notice => ""ical secret reset for #{@user.email}""
+  end"
+UsersController,generate_ical_secret,() -> true,() -> true,"def generate_ical_secret
+    if current_user && (current_user.ical_secret == nil || current_user.ical_secret == """") then
+      current_user.update_attribute(:ical_secret, SecureRandom.base64)
+    end
+    true
+  end"
+TheMailer,send_talks,"(User, (ActiveRecord_Relation<Talk> or Array<Talk>), String) -> ActionMailer::MessageDelivery","(User, Array<Talk>, String) -> Mail::Message","def send_talks(user, talks, subj)
+    @talks = talks.sort { |a,b| a.start_time <=> b.start_time }
+    @subj = subj
+    mail :to => ""#{user.name} <#{user.email}>"",
+         :subject => ""[Talks] #{@subj}""
+  end"
+TheMailer,send_external_reg,(Registration) -> ActionMailer::MessageDelivery,(Registration) -> Mail::Message,"def send_external_reg(reg)
+    @reg = reg
+    @talk = reg.talk
+
+    mail :to => ""#{@reg.name} <#{@reg.email}>"",
+         :subject => ""[Talks] Registration confirmation""
+  end"
+TheMailer,send_talk_change,"(User, Talk, XXX) -> ActionMailer::MessageDelivery","(User, Talk, Set<(:abstract or :bio or :reg or :speaker or :time or :title or :venue)>) -> Mail::Message","def send_talk_change(user, talk, changes)
+    @user = user
+    @talk = talk
+    @changes = changes
+    if @changes
+      @subj = ""[Talks] Talk update: #{@talk.title}""
+    else
+      @subj = ""[Talks] New talk posted: #{@talk.title}""
+    end
+
+    mail :to => ""#{@user.name} <#{@user.email}>"",
+         :subject => @subj
+  end"
+TheMailer,send_feedback,(([ []: (:comments) -> XXX ] and [ []: (:email) -> XXX ] and [ []: (:name) -> XXX ] and [ []: (:subject) -> XXX ])) -> ActionMailer::MessageDelivery,"(Hash<Symbol, String>) -> Mail::Message","def send_feedback(h)
+    @comments = h[:comments]
+    mail :to => ""Talks <talks@cs.umd.edu>"",
+         :subject => h[:subject],
+         :from => ""#{h[:name]} <#{h[:email]}>""
+  end"
+TheMailer,send_admin_message,"((Gem::Specification or Registration or User), ([ []: (:message) -> XXX ] and [ []: (:subject) -> XXX ])) -> ActionMailer::MessageDelivery","(User, Hash<Symbol, String>) -> Mail::Message","def send_admin_message(u, h)
+    @message = h[:message]
+    mail :to => ""#{u.name} <#{u.email}>"",
+         :subject => h[:subject]
+  end"
+ApplicationHelper,join_with_and,(([ []: (Number) -> XXX ] and [ []: (Range<Number>) -> XXX ] and [ length: () -> XXX ])) -> String,(Array<String>) -> String,"def join_with_and(a)
+    return """" if a.length == 0
+    return a[0] if a.length == 1
+    return ""#{a[0]} and #{a[1]}"" if a.length == 2
+    return ""#{a[0..-2].join "",""}, and #{a[-1]}""
+  end"
+TalksHelper,render_speaker,(Talk) -> String,(Talk) -> String,"def render_speaker(talk)
+    if talk.speaker.empty?
+      @out = ""No speaker yet""
+    else
+      @out = talk.speaker
+    end
+    unless talk.speaker_affiliation.empty?
+      @out += "" - #{talk.speaker_affiliation}""
+    end
+    unless talk.speaker_url.empty?
+      @out = link_to @out, talk.speaker_url
+    end
+    return @out.sanitize
+  end"
+TalksHelper,render_venue,(Talk) -> String,(Talk) -> String,"def render_venue(talk)
+    return ""<i>No venue yet</i>"".sanitize unless (talk.room || talk.building)
+
+    if talk.building && (not talk.building.name.empty?)
+      @out = ""#{talk.room} #{talk.building.name} (#{talk.building.abbrv})""
+    elsif talk.building
+      @out = ""#{talk.room} #{talk.building.abbrv}""
+    else
+      @out = talk.room
+    end
+    if talk.building && talk.building.url && (not talk.building.url.empty?)
+      @out = link_to @out, talk.building.url
+    end
+    return @out.sanitize
+  end"
+TalksHelper,render_time,(Talk) -> XXX,(Talk) -> String,"def render_time(talk)
+    if talk.start_time && talk.end_time
+      @out = (talk.start_time.strftime ""%A, %B %-d, %Y, "") + (talk.start_time.strftime(""%l:%M"").lstrip)
+      if ((talk.start_time.hour < 12) == (talk.end_time.hour < 12)) # both am or both pm
+        @out += ""-"" + (talk.end_time.strftime(""%l:%M %P"").lstrip)
+      else
+        @out += (talk.start_time.strftime "" %P-"") + (talk.end_time.strftime(""%l:%M %P"").lstrip)
+      end
+    else
+      @out = ""(Time not yet available)""
+    end
+    return @out.sanitize
+  end"
+TalksHelper,render_lists,(Talk) -> String,(Talk) -> String,"def render_lists(talk)
+    return (talk.lists
+              .sort { |a,b| a.name <=> b.name }
+              .map { |l| link_to l.name, list_url(l) }
+              .join ""&nbsp;&sdot;&nbsp;"").sanitize
+  end"
+TalksHelper,render_array_of_lists,((ActiveRecord_Relation<List> or Array<List>)) -> String,(Array<List>) -> String,"def render_array_of_lists(lists)
+    return (lists
+              .sort { |a,b| a.name <=> b.name }
+              .map { |l| link_to l.name, list_url(l) }
+              .join ""&nbsp;&sdot;&nbsp;"").sanitize
+  end"
+TalksHelper,organize_talks,"([ each: () {(XXX) -> XXX} -> XXX ]) -> { past: Array<XXX>, today: Array<XXX>, later_this_week: Array<XXX>, next_week: Array<XXX>, beyond: Array<XXX>, now: Time }","(Array<Talk>) -> Hash<(:beyond or :later_this_week or :next_week or :now or :past or :today), (Array<Array<Talk>> or Array<Talk> or Time)>","def organize_talks(talks)
+    h = Hash.new
+    h[:past] = []
+    h[:today] = []
+    h[:later_this_week] = []
+    (0..6).each { |wday| h[:later_this_week][wday] = [] }
+    h[:next_week] = []
+    (0..6).each { |wday| h[:next_week][wday] = [] }
+    h[:beyond] = []
+
+    h[:now] = Time.now
+
+    the_past = (h[:now] - 1.day).end_of_day
+    today = h[:now].beginning_of_day..h[:now].end_of_day
+    later_this_week = (h[:now].beginning_of_day + 1.day)..((h[:now] + 1.day).end_of_week - 1.day)
+    next_week = ((h[:now] + 1.day).beginning_of_week + 6.day)..((h[:now] + 1.day).end_of_week + 6.day)
+    beyond = (h[:now] + 1.day).beginning_of_week + 13.day
+
+    talks.each do |t|
+      if t.start_time <= the_past
+        h[:past] << t
+      elsif today.cover? t.start_time
+        h[:today] << t
+      elsif later_this_week.cover? t.start_time
+        h[:later_this_week][t.start_time.wday] << t
+      elsif next_week.cover? t.start_time
+        h[:next_week][t.start_time.wday] << t
+      else
+        h[:beyond] << t
+      end
+    end
+
+    h[:past].sort! { |a,b| a.start_time <=> b.start_time }
+    h[:today].sort! { |a,b| a.start_time <=> b.start_time }
+    h[:later_this_week].each { |ts| ts.sort! { |a,b| a.start_time <=> b.start_time } }
+    h[:next_week].each { |ts| ts.sort! { |a,b| a.start_time <=> b.start_time } }
+    h[:beyond].sort! { |a,b| a.start_time <=> b.start_time }
+
+    return h
+  end"
+TalksHelper,format_day,((ActiveSupport::TimeWithZone or Date or String or TZInfo::Timezone or Time)) -> String,((ActiveSupport::TimeWithZone or Date)) -> String,"def format_day(time)
+    time.strftime(""%A, %B %-d, %Y"")
+  end"

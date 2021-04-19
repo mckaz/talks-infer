@@ -1,0 +1,19 @@
+Class,Method Name,Arg/Ret/Var,Variable Name,Inferred Type,Original Type,Exact (E) / Up to Parameter (P) / Got Type (T) / None (N),Solution Source,Source Code
+User,name_and_email,Ret,"",String,String,E,Constraints,"def name_and_email
+    ""#{name} &lt;#{email}&gt;"".sanitize
+  end"
+User,email_and_name,Ret,"",String,String,E,Constraints,"def email_and_name
+    ""#{email} (#{name})"".sanitize
+  end"
+User,subscribed_lists,Ret,"","Array<[List, String]>",Array<Array<(List or Symbol)>>,P,Constraints,"def subscribed_lists
+    subscriptions.where(:subscribable_type => ""List"").map { |s| [List.find(s.subscribable_id), s.kind] }
+  end"
+Total # E:,2
+Total # P:,1
+Total # T:,0
+Total # TS:,0
+Total # N:,0
+Total # return types:,3
+Total # arg types:,0
+Total # var types:,0
+Total # individual types:,3

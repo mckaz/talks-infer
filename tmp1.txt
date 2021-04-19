@@ -1,0 +1,691 @@
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= Array<String>
+Trying Array<String> <= Symbol
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= Array<String>
+Trying Array<String> <= Symbol
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+1. Adding ubound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+2. Adding lbound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying { to: String, subject: { { TheMailer#send_feedback arg: h }#[] ret: ret }, from: String } <= { subject: ?String, to: ?String, from: ?String, cc: ?((Array<String> or String)), bcc: ?((Array<String> or String)), reply_to: ?String, date: ?String }
+Trying String <= String
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+Trying String <= String
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+1. Adding ubound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+Trying ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+2. Adding lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+
+[0;90;49mconstraint.rb:6 [0m[[0;92;49mresolve_constraints[0m] [1;39;49mStarting constraint resolution...[0m
+4. Adding and propagating lbound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+4. Adding and propagating lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+
+[0;90;49mconstraint.rb:349 [0m[[0;92;49mextract_solutions[0m] [1;39;49mBegin Extract Solutions[0m
+[0;90;49mconstraint.rb:363 [0m[[0;92;49mextract_solutions[0m] [0;37;49m[1] Running solution extraction...[0m
+Extracting TheMailer#@comments
+Trying rule `is_model` for variable { TheMailer# var: @comments }.
+Trying rule `is_pluralized_model` for variable { TheMailer# var: @comments }.
+Trying rule `struct_to_nominal` for variable { TheMailer# var: @comments }.
+Trying rule `int_names` for variable { TheMailer# var: @comments }.
+Trying rule `int_array_name` for variable { TheMailer# var: @comments }.
+Trying rule `predicate_method` for variable { TheMailer# var: @comments }.
+Trying rule `string_name` for variable { TheMailer# var: @comments }.
+Trying rule `hash_access` for variable { TheMailer# var: @comments }.
+Extracting TheMailer#send_feedback
+Trying [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :comments
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= :subject
+Trying [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :comments
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= :name
+Trying [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :comments
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= :email
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :subject
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :name
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :subject
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :email
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :name
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :email
+Trying rule `is_model` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `is_pluralized_model` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `struct_to_nominal` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `int_names` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `int_array_name` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `predicate_method` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `string_name` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `hash_access` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `is_model` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `is_pluralized_model` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `struct_to_nominal` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `int_names` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `int_array_name` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `predicate_method` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `string_name` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `hash_access` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+3. Adding and propagating ubound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+4. Adding and propagating lbound String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying String <= String
+Got non-heuristic solution String
+Trying rule `is_model` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `is_pluralized_model` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `struct_to_nominal` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `int_names` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `int_array_name` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `predicate_method` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `string_name` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `hash_access` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `is_model` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `is_pluralized_model` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `struct_to_nominal` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `int_names` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `int_array_name` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `predicate_method` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `string_name` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+Trying rule `hash_access` for variable { { TheMailer#send_feedback arg: h }#[] ret: ret }.
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+4. Adding and propagating lbound { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { TheMailer#send_feedback arg: h }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> String <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= %any
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Heuristic Applied: hash_access
+Got solution { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+3. Adding and propagating ubound { TheMailer#send_feedback ret: ret } <= ActionMailer::MessageDelivery
+Trying ActionMailer::MessageDelivery <= ActionMailer::MessageDelivery
+4. Adding and propagating lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+Trying ActionMailer::MessageDelivery <= ActionMailer::MessageDelivery
+Got non-heuristic solution ActionMailer::MessageDelivery
+Extracted solution for TheMailer#send_feedback is ({ comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) -> ActionMailer::MessageDelivery
+[0;90;49mconstraint.rb:363 [0m[[0;92;49mextract_solutions[0m] [0;37;49m[2] Running solution extraction...[0m
+Extracting TheMailer#@comments
+Trying rule `is_model` for variable { TheMailer# var: @comments }.
+Trying rule `is_pluralized_model` for variable { TheMailer# var: @comments }.
+Trying rule `struct_to_nominal` for variable { TheMailer# var: @comments }.
+Trying rule `int_names` for variable { TheMailer# var: @comments }.
+Trying rule `int_array_name` for variable { TheMailer# var: @comments }.
+Trying rule `predicate_method` for variable { TheMailer# var: @comments }.
+Trying rule `string_name` for variable { TheMailer# var: @comments }.
+Trying rule `hash_access` for variable { TheMailer# var: @comments }.
+Extracting TheMailer#send_feedback
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :subject
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :name
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :subject
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :email
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :name
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :email
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> String <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= %any
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :name
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :email
+Trying rule `is_model` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `is_pluralized_model` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `struct_to_nominal` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `int_names` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `int_array_name` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `predicate_method` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `string_name` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `hash_access` for variable { TheMailer#send_feedback arg: h }.
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+4. Adding and propagating lbound ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= { TheMailer#send_feedback arg: h }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> String <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= %any
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Got non-heuristic solution ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+3. Adding and propagating ubound { TheMailer#send_feedback ret: ret } <= ActionMailer::MessageDelivery
+Trying ActionMailer::MessageDelivery <= ActionMailer::MessageDelivery
+4. Adding and propagating lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+Trying ActionMailer::MessageDelivery <= ActionMailer::MessageDelivery
+Got non-heuristic solution ActionMailer::MessageDelivery
+Extracted solution for TheMailer#send_feedback is (([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })) -> ActionMailer::MessageDelivery
+[0;90;49mconstraint.rb:363 [0m[[0;92;49mextract_solutions[0m] [0;37;49m[3] Running solution extraction...[0m
+Extracting TheMailer#@comments
+Trying rule `is_model` for variable { TheMailer# var: @comments }.
+Trying rule `is_pluralized_model` for variable { TheMailer# var: @comments }.
+Trying rule `struct_to_nominal` for variable { TheMailer# var: @comments }.
+Trying rule `int_names` for variable { TheMailer# var: @comments }.
+Trying rule `int_array_name` for variable { TheMailer# var: @comments }.
+Trying rule `predicate_method` for variable { TheMailer# var: @comments }.
+Trying rule `string_name` for variable { TheMailer# var: @comments }.
+Trying rule `hash_access` for variable { TheMailer# var: @comments }.
+Extracting TheMailer#send_feedback
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :subject
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :name
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :subject
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :email
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :name
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :email
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> String <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= %any
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :name
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :email
+Trying rule `is_model` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `is_pluralized_model` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `struct_to_nominal` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `int_names` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `int_array_name` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `predicate_method` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `string_name` for variable { TheMailer#send_feedback arg: h }.
+Trying rule `hash_access` for variable { TheMailer#send_feedback arg: h }.
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+4. Adding and propagating lbound ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= { TheMailer#send_feedback arg: h }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> String <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= %any
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying String <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } }) <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying Symbol <= Symbol
+Trying (%any) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= %any
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Got non-heuristic solution ([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })
+3. Adding and propagating ubound { TheMailer#send_feedback ret: ret } <= ActionMailer::MessageDelivery
+Trying ActionMailer::MessageDelivery <= ActionMailer::MessageDelivery
+4. Adding and propagating lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+Trying ActionMailer::MessageDelivery <= ActionMailer::MessageDelivery
+Got non-heuristic solution ActionMailer::MessageDelivery
+Extracted solution for TheMailer#send_feedback is (([ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] and { comments: { { TheMailer#send_feedback arg: h }#[] ret: ret }, subject: String, name: { { TheMailer#send_feedback arg: h }#[] ret: ret }, email: { { TheMailer#send_feedback arg: h }#[] ret: ret } })) -> ActionMailer::MessageDelivery
+
+[0;90;49mconstraint.rb:332 [0m[[0;92;49mmake_extraction_report[0m] [1;39;49mExtraction Complete[0m
+[0;90;49mconstraint.rb:333 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal correct (that could be automatically inferred): 0[0m
+[0;90;49mconstraint.rb:334 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal # method types: 1[0m
+[0;90;49mconstraint.rb:335 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal # variable types: 1[0m
+[0;90;49mconstraint.rb:336 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal # individual types: 3[0m
+[0;90;49mwrap.rb:897 [0m[[0;92;49mdo_infer[0m] [0;37;49mTotal number of type casts used: 0.[0m
+[0;90;49mwrap.rb:899 [0m[[0;92;49mdo_infer[0m] [0;37;49mTotal time taken: 0.358434.[0m
+[0;90;49mwrap.rb:900 [0m[[0;92;49mdo_infer[0m] [0;37;49mTotal amount of time spent on stn: 0.32090699999999994.[0m
+[0;90;49mconstraint.rb:414 [0m[[0;92;49mlog_heuristic_counts[0m] [0;37;49mHeuristic hash_access uses: 1[0m

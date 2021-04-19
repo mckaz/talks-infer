@@ -7,7 +7,6 @@ RDL.load_rails_schema
 
 RDL::Config.instance.promote_widen = true
 
-
 ## user model
 RDL.infer User, :name_and_email, time: :later
 RDL.infer User, :email_and_name, time: :later
@@ -25,7 +24,7 @@ RDL.infer Talk, 'self.past', time: :later
 RDL.infer Talk, 'self.current', time: :later
 RDL.infer Talk, 'self.today', time: :later
 RDL.infer Talk, 'self.this_week', time: :later
-RDL.infer Talk, 'self.all_recent', time: :later
+#RDL.infer Talk, 'self.all_recent', time: :later
 RDL.infer Talk, :past?, time: :later
 RDL.infer Talk, :upcoming?, time: :later
 RDL.infer Talk, :current?, time: :later
@@ -35,7 +34,7 @@ RDL.infer Talk, :later_this_week?, time: :later
 RDL.infer Talk, :next_week?, time: :later
 RDL.infer Talk, :further_ahead?, time: :later
 RDL.infer Talk, :match_range, time: :later
-RDL.infer Talk, :subscription, time: :later
+#RDL.infer Talk, :subscription, time: :later
 RDL.infer Talk, :owner?, time: :later
 RDL.infer Talk, :poster?, time: :later
 RDL.infer Talk, :subscriber?, time: :later
@@ -45,7 +44,7 @@ RDL.infer Talk, :through, time: :later
 RDL.infer Talk, :email_watchers, time: :later
 
 ## ability (not actually model)
-RDL.infer Ability, :initialize, time: :later
+#RDL.infer Ability, :initialize, time: :later
 
 ## building model
 RDL.infer Building, :abbrv_and_name, time: :later
@@ -69,7 +68,7 @@ RDL.infer ApplicationController, :require_site_admin, time: :later
 #RDL.infer ApplicationController, :do_subscription, time: :later ## TODO: handle polymorphic associations
 RDL.infer ApplicationController, :generate_ical, time: :later
 RDL.infer ApplicationController, :fix_range, time: :later
-RDL.infer ApplicationController, :configure_permitted_parameters, time: :later
+#RDL.infer ApplicationController, :configure_permitted_parameters, time: :later
 
 ## BuildingsController
 RDL.infer BuildingsController, :index, time: :later
@@ -91,8 +90,8 @@ RDL.infer JobsController, :do_reload, time: :later
 RDL.infer JobsController, :do_status, time: :later
 RDL.infer JobsController, :runcmd, time: :later
 RDL.infer_var_type JobsController, :@success
-RDL.infer_var_type :$?
-RDL.infer JobsController, :note, time: :later
+#RDL.infer_var_type :$?
+#RDL.infer JobsController, :note, time: :later
 RDL.infer JobsController, :error, time: :later
 
 ## ListsController
@@ -149,7 +148,7 @@ RDL.infer_var_type TalksController, :@success
 RDL.infer TalksController, :feed, time: :later
 RDL.infer TalksController, :calendar, time: :later
 RDL.infer TalksController, :show_subscribers, time: :later
-RDL.infer_var_type TalksController, :@subscribers
+#RDL.infer_var_type TalksController, :@subscribers
 RDL.infer TalksController, :feedback, time: :later
 RDL.infer TalksController, :receive_feedback, time: :later
 RDL.infer TalksController, :adjust, time: :later
@@ -177,7 +176,7 @@ RDL.infer UsersController, :feed, time: :later
 RDL.infer_var_type UsersController, :@title
 RDL.infer UsersController, :reset_ical_secret, time: :later
 RDL.infer UsersController, :generate_ical_secret, time: :later
-RDL.infer UsersController, :user_params, time: :later
+#RDL.infer UsersController, :user_params, time: :later
 
 
 ## TheMailer
@@ -188,7 +187,7 @@ RDL.infer_var_type TheMailer, :@subj
 RDL.infer TheMailer, :send_external_reg, time: :later
 RDL.infer_var_type TheMailer, :@reg
 RDL.infer_var_type TheMailer, :@talk
-RDL.infer TheMailer, :send_cancel_reg, time: :later
+#RDL.infer TheMailer, :send_cancel_reg, time: :later
 RDL.infer TheMailer, :send_talk_change, time: :later
 RDL.infer_var_type TheMailer, :@user
 RDL.infer_var_type TheMailer, :@changes
@@ -246,11 +245,12 @@ def Hash.permit_ret(trec, targs)
         return RDL::Type::FiniteHashType.new(new_hash, nil)
       }
     else
-      return self
+      return trec
     end
   else
-    return self
+    return trec
   end
 end
 
-RDL.do_infer :later
+RDL.do_infer :later, num_times: 1
+

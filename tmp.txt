@@ -1,0 +1,150 @@
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= Array<String>
+Trying Array<String> <= Symbol
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying Symbol <= String
+Trying String <= Symbol
+Trying Symbol <= Array<String>
+Trying Array<String> <= Symbol
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+1. Adding ubound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+2. Adding lbound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying { TheMailer#send_feedback arg: h } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+1. Adding ubound { TheMailer#send_feedback arg: h } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying String <= Array<String>
+Trying Array<String> <= String
+Trying { to: String, subject: { { TheMailer#send_feedback arg: h }#[] ret: ret }, from: String } <= { subject: ?String, to: ?String, from: ?String, cc: ?((Array<String> or String)), bcc: ?((Array<String> or String)), reply_to: ?String, date: ?String }
+Trying String <= String
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+Trying String <= String
+Trying { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+1. Adding ubound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= String
+Trying ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+2. Adding lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+
+[0;90;49mconstraint.rb:6 [0m[[0;92;49mresolve_constraints[0m] [1;39;49mStarting constraint resolution...[0m
+4. Adding and propagating lbound { { TheMailer#send_feedback arg: h }#[] ret: ret } <= { TheMailer# var: @comments }
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+3. Adding and propagating ubound { TheMailer#send_feedback arg: h } <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+4. Adding and propagating lbound ActionMailer::MessageDelivery <= { TheMailer#send_feedback ret: ret }
+
+[0;90;49mconstraint.rb:349 [0m[[0;92;49mextract_solutions[0m] [1;39;49mBegin Extract Solutions[0m
+[0;90;49mconstraint.rb:363 [0m[[0;92;49mextract_solutions[0m] [0;37;49m[1] Running solution extraction...[0m
+Extracting TheMailer#@comments
+Trying rule `is_model` for variable { TheMailer# var: @comments }.
+Trying rule `is_pluralized_model` for variable { TheMailer# var: @comments }.
+Trying rule `struct_to_nominal` for variable { TheMailer# var: @comments }.
+Trying rule `int_names` for variable { TheMailer# var: @comments }.
+Trying rule `int_array_name` for variable { TheMailer# var: @comments }.
+Trying rule `predicate_method` for variable { TheMailer# var: @comments }.
+Trying rule `string_name` for variable { TheMailer# var: @comments }.
+Trying rule `hash_access` for variable { TheMailer# var: @comments }.
+Extracting TheMailer#send_feedback
+Trying [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :comments
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= :email
+Trying [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :comments
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= :name
+Trying [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :comments
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:comments) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :comments <= :subject
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :email
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :name
+Trying [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :email
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:email) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :email <= :subject
+Trying [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :subject <= :name
+Trying [ []: (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ] <= [ []: (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } ]
+Trying (:subject) -> { { TheMailer#send_feedback arg: h }#[] ret: ret } <= (:name) -> { { TheMailer#send_feedback arg: h }#[] ret: ret }
+Trying :name <= :subject
+Error while exctracting solution for TheMailer#send_feedback: undefined local variable or method `ts' for #<RDL::Type::IntersectionType:0x00007fd6da54c028>
+Did you mean?  t; continuing...
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/types/intersection.rb:64:in `canonicalize!'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/types/intersection.rb:46:in `canonical'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:57:in `extract_var_sol'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:198:in `block in extract_meth_sol'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:185:in `map'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:185:in `extract_meth_sol'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:375:in `block (2 levels) in extract_solutions'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:365:in `each'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:365:in `block in extract_solutions'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:358:in `loop'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/constraint.rb:358:in `extract_solutions'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/wrap.rb:887:in `block in do_infer'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/wrap.rb:859:in `times'
+/Users/milod/Documents/works/tmp-rdl/rdl/lib/rdl/wrap.rb:859:in `do_infer'
+infer.rb:257:in `<top (required)>'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands/runner.rb:60:in `load'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands/runner.rb:60:in `<top (required)>'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands/commands_tasks.rb:123:in `require'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands/commands_tasks.rb:123:in `require_command!'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands/commands_tasks.rb:90:in `runner'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands/commands_tasks.rb:39:in `run_command!'
+/Users/milod/.rvm/gems/ruby-2.6.3/gems/railties-4.2.10/lib/rails/commands.rb:17:in `<top (required)>'
+script/rails:6:in `require'
+script/rails:6:in `<main>'
+
+[0;90;49mconstraint.rb:332 [0m[[0;92;49mmake_extraction_report[0m] [1;39;49mExtraction Complete[0m
+[0;90;49mconstraint.rb:333 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal correct (that could be automatically inferred): 0[0m
+[0;90;49mconstraint.rb:334 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal # method types: 0[0m
+[0;90;49mconstraint.rb:335 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal # variable types: 1[0m
+[0;90;49mconstraint.rb:336 [0m[[0;92;49mmake_extraction_report[0m] [0;37;49mTotal # individual types: 1[0m
+[0;90;49mwrap.rb:897 [0m[[0;92;49mdo_infer[0m] [0;37;49mTotal number of type casts used: 0.[0m
+[0;90;49mwrap.rb:899 [0m[[0;92;49mdo_infer[0m] [0;37;49mTotal time taken: 0.01841.[0m
+[0;90;49mwrap.rb:900 [0m[[0;92;49mdo_infer[0m] [0;37;49mTotal amount of time spent on stn: 4.0e-06.[0m
+[0;90;49mconstraint.rb:417 [0m[[0;92;49mlog_heuristic_counts[0m] [0;37;49mNo heuristics used![0m
